@@ -1,0 +1,16 @@
+# This is a PYTHIA configuration file. Lines starting with # are comments.
+
+# --- Beam Parameters ---
+# We are colliding two protons (p+).
+Beams:idA = 2212               # Particle ID for a proton
+Beams:idB = 2212               # Particle ID for a proton
+Beams:eCM = 13000.             # Center-of-mass energy in GeV (13 TeV)
+
+# --- Physics Processes ---
+# We are enabling the most common types of interactions.
+HardQCD:all = on               # Enable hard Quantum Chromodynamics (strong force) processes
+SoftQCD:all = on               # Enable soft QCD processes (lower energy interactions)
+
+# --- Event Settings ---
+# How many events to generate is controlled by our Python script, not here.
+# This file just sets up the physics for a single collision event.
