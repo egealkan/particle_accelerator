@@ -7,14 +7,14 @@ from pythia8 import Pythia
 # --- 1. SETUP ---
 
 # The path to our configuration file.
-pythia_config_file = "physics/configs/pp_13TeV.cmnd"
+pythia_config_file = "physics/configs/pp_13TeV_Z_to_muons.cmnd"
 
 # The path where we will save our output data.
-output_file_path = "data/pp_13TeV_5M_events.root"
+output_file_path = "data/signal_Z_to_muons_200k.root"
 
 # The number of collision events we want to generate.
 # We start with 10,000 for a quick test run. We can increase this to millions later.
-num_events = 5000000
+num_events = 200000
 
 print("Initializing PYTHIA...")
 # Initialize Pythia with our configuration file.
@@ -35,6 +35,7 @@ tree = ROOT.TTree("events", "Particle Tree")
 # We use arrays because each event will have a different number of particles.
 MAX_PARTICLES = 2000 # Set a max limit for array sizes
 particle_id = ROOT.std.vector('int')()
+particle_status = ROOT.std.vector('int')()
 particle_px = ROOT.std.vector('float')()
 particle_py = ROOT.std.vector('float')()
 particle_pz = ROOT.std.vector('float')()
@@ -42,6 +43,7 @@ particle_E = ROOT.std.vector('float')()
 
 # Link our variables to the TTree branches (columns).
 tree.Branch("particle_id", particle_id)
+tree.Branch("particle_status", particle_status)
 tree.Branch("particle_px", particle_px)
 tree.Branch("particle_py", particle_py)
 tree.Branch("particle_pz", particle_pz)
@@ -58,6 +60,7 @@ for i_event in range(num_events):
 
     # Clear the vectors for the new event's data.
     particle_id.clear()
+    particle_status.clear()
     particle_px.clear()
     particle_py.clear()
     particle_pz.clear()
@@ -68,6 +71,7 @@ for i_event in range(num_events):
         # We only save the "final" particles - the ones that would actually hit a detector.
         if particle.isFinal():
             particle_id.push_back(particle.id())
+            particle_status.push_back(particle.statusAbs())
             particle_px.push_back(particle.px())
             particle_py.push_back(particle.py())
             particle_pz.push_back(particle.pz())

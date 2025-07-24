@@ -1,0 +1,17 @@
+# This config FORCES the production of Z bosons decaying to muons.
+
+# --- Beam Parameters ---
+Beams:idA = 2212
+Beams:idB = 2212
+Beams:eCM = 13000.
+
+# --- Process Selection ---
+# Turn ON only the process where a fermion-antifermion pair produces a Z boson
+WeakSingleBoson:ffbar2gmZ = on  # <--- THIS IS THE CORRECTED LINE
+
+# --- Z Boson Decay Selection ---
+# PDG ID 23 is the Z boson.
+# First, turn OFF all its possible decay modes.
+23:onMode = off
+# Then, turn ON ONLY the decay to a muon (13) and an anti-muon (-13).
+23:onIfMatch = 13 -13
